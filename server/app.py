@@ -13,7 +13,8 @@ db_config = {
     "host": os.getenv("DB_HOST"),
     "user": os.getenv("DB_USER"),
     "password": os.getenv("DB_PASS"),
-    "database": os.getenv("DB_NAME")
+    "database": os.getenv("DB_NAME"),
+    "port": os.getenv("DB_PORT")
 }
 
 conn = mysql.connector.connect(**db_config)
@@ -22,9 +23,6 @@ cursor = conn.cursor()
 @app.route("/api/hello", methods=["GET"])
 def hello():
     return jsonify({"message": "Hello from Flask!"})
-
-if __name__ == "__main__":
-    app.run(port=5000, debug=True)
 
 # Database setup
 @app.route("/api/transactions", methods=["GET"])
@@ -48,3 +46,6 @@ def add_transaction():
     conn.commit()
     cursor.close()
     return jsonify({"message": "Transaction added"}), 201
+
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)

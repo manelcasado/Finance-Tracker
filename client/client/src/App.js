@@ -10,4 +10,11 @@ function App() {
   );
 }
 
+reportWebVitals(console.log)
+function reportWebVitals(callback) {
+  if (callback && typeof callback === "function") {
+    callback();
+  }
+}
+
 export default App;
