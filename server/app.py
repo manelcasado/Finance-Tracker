@@ -39,13 +39,21 @@ def add_transaction():
     amount = data.get("amount", 0)
     description = data.get("description", "")
     date_str = data.get("date", "")
-    
+    category = data.get("category", "")
+ 
     cursor = conn.cursor()
-    sql = "INSERT INTO transactions (amount, description, date) VALUES (%s, %s, %s)"
-    cursor.execute(sql, (amount, description, date_str))
+    sql = "INSERT INTO transactions (amount, description, date, category) VALUES (%s, %s, %s, %s)"
+    cursor.execute(sql, (amount, description, date_str, category))
     conn.commit()
     cursor.close()
     return jsonify({"message": "Transaction added"}), 201
+
+# @app.route("/api/transactions", methods=["DELETE"])
+# def delete_transactions():
+#     cursor  = conn.cursor(dictionary=True)
+#     cursor.execute("DELETE * FROM transactions")
+#     cursor.close()
+#     return jsonify({"message": "Transactions deleted"}), 201
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
