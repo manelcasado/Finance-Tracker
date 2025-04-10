@@ -14,9 +14,11 @@ export async function addTransaction(transaction) {
   return response.json();
 }
 
-// export async function getDeleteTransactions() {
-//     const response = await fetch(`${API_BASE_URL}/transactions`, {
-//         method: "DELETE",
-//     });
-//     return response.json();
-// }
+export async function getDeleteTransactions() {
+    const response = await fetch(`${API_BASE_URL}/transactions`, {
+        method: "DELETE",
+    });
+
+    // Return an empty object if there's no content in the response
+    return response.status !== 204 ? response.json() : {};
+}

@@ -48,12 +48,12 @@ def add_transaction():
     cursor.close()
     return jsonify({"message": "Transaction added"}), 201
 
-# @app.route("/api/transactions", methods=["DELETE"])
-# def delete_transactions():
-#     cursor  = conn.cursor(dictionary=True)
-#     cursor.execute("DELETE * FROM transactions")
-#     cursor.close()
-#     return jsonify({"message": "Transactions deleted"}), 201
+@app.route("/api/transactions", methods=["DELETE"])
+def delete_transactions():
+    cursor  = conn.cursor(dictionary=True)
+    cursor.execute("DELETE FROM transactions")
+    cursor.close()
+    return jsonify({"message": "Transactions deleted"}), 201
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

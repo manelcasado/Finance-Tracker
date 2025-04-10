@@ -10,7 +10,7 @@ function Transactions() {
     date: "",
     category: ""
   });
-  // const [deleteTransactions, setDeleteTransactions] = useState([]);
+  const [deleteTransactions, setDeleteTransactions] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -27,24 +27,26 @@ function Transactions() {
     setNewTransaction({ amount: "", description: "", date: "", category: "" });
   };
 
-//   const handleDelete = async () => {
-//     const data = await getDeleteTransactions();
-//     setDeleteTransactions(data);
-//     // Refresh transaction list
-//   };
+  const handleDelete = async () => {
+    const data = await getDeleteTransactions(deleteTransactions);
+    setDeleteTransactions(data);
+    // Refresh transaction list
+  };
 
 return (
     <div>
-        <h2>Transactions</h2>
+        <h2><u>Transactions</u></h2>
         <ul>
-            {transactions.map((t) => (
-                <li key={t.id}>
-                    {t.date} - ${t.amount} - {t.description} - {t.category}
-                </li>
-            ))}
+            {transactions
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .map((t) => (
+                    <li key={t.id}>
+                        {t.date} - ${t.amount} - {t.description} - {t.category}
+                    </li>
+                ))}
         </ul>
         <div className="col mb-3">
-                <button className="btn btn-primary" onClick={handleAdd /*handleDelete*/}>Remove transactions</button>
+                <button className="shadow btn btn-danger" onClick={handleDelete}>Delete transactions</button>
         </div>
         <h3>Add Transaction</h3>
         <div className="row gy-2 gx-3 align-items-center">
@@ -82,7 +84,7 @@ return (
                     value={newTransaction.category}
                     onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
                 >
-                    <option value="" disabled>Choose...</option>
+                    <option value="" disabled>Select Category...</option>
                     <option value="Utilities">Utilities</option>
                     <option value="Groceries">Groceries</option>
                     <option value="Entertainment">Entertainment</option>
@@ -95,8 +97,39 @@ return (
                 </select>
             </div>
             <div className="col-auto">
-                <button className="btn btn-primary" onClick={handleAdd}>Add</button>
+                <button className="shadow btn btn-primary" onClick={handleAdd}>Add</button>
             </div>
+            <h3>View by Category</h3>
+            <div className="col-auto">
+                <label htmlFor="inputState" className="visually-hidden">Category</label>
+                <select
+                    id="inputState"
+                    className="form-select"
+                    value={newTransaction.category}
+                    onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
+                >
+                    <option value="" disabled>Select Category...</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Insurance">Insurance</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <ul>
+            {transactions
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .filter((t) => t.category === newTransaction.category)
+                .map((t) => (
+                    <li key={t.id}>
+                        {t.date} - ${t.amount} - {t.description} - {t.category}
+                    </li>
+                ))}
+            </ul>
         </div>
     </div>
 );
