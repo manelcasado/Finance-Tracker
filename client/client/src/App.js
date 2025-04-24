@@ -1,12 +1,17 @@
 import React from "react";
-import Transactions from "./Transactions";;
+import Transactions from "./Transactions";
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <br></br>
-      <h1>Finance Tracker</h1>
-      <Transactions />
+    <div className="app-container">
+      <div className="app-header">
+        <h1>Finance Tracker</h1>
+        <p className="app-subtitle">Track your spending with style</p>
+      </div>
+      <div className="finance-container">
+        <Transactions />
+      </div>
     </div>
   );
 }
